@@ -19,6 +19,8 @@ class BusinessController extends Controller
 
     public function show(Business $business): Response
     {
+        $business->increment('views_count');
+
         return Inertia::render('businesses/show', [
             'business' => $business,
         ]);

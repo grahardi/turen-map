@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BusinessController as AdminBusinessController;
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BusinessController::class, 'index'])->name('home');
@@ -12,7 +13,7 @@ Route::post('/bisnis', [BusinessController::class, 'store'])->name('businesses.s
 Route::get('/bisnis/{business}', [BusinessController::class, 'show'])->name('businesses.show');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/bisnis', [AdminBusinessController::class, 'index'])->name('businesses.index');

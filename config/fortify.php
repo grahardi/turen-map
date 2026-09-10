@@ -144,7 +144,7 @@ return [
     */
 
     'features' => [
-        Features::registration(),
+        // Features::registration(), // dimatikan — hanya akun yang sudah dibuat manual yang bisa login
         Features::resetPasswords(),
         Features::emailVerification(),
     ],
