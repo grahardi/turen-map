@@ -129,6 +129,7 @@ class BusinessController extends Controller
             'phone' => 'nullable|string|max:30',
             'hours' => 'nullable|string|max:100',
             'is_verified' => 'boolean',
+            'subdomain_enabled' => 'boolean',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
             'photo' => 'nullable|image|max:4096',

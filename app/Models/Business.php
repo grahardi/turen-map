@@ -30,6 +30,7 @@ class Business extends Model
         'shopee_url',
         'youtube_url',
         'microsite_path',
+        'subdomain_enabled',
     ];
 
     protected function casts(): array
@@ -38,6 +39,7 @@ class Business extends Model
             'latitude' => 'float',
             'longitude' => 'float',
             'is_verified' => 'boolean',
+            'subdomain_enabled' => 'boolean',
         ];
     }
 

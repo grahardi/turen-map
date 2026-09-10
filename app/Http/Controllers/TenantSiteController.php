@@ -14,7 +14,7 @@ class TenantSiteController extends Controller
     {
         $business = Business::where('slug', $subdomain)->first();
 
-        if (! $business) {
+        if (! $business || ! $business->subdomain_enabled) {
             abort(404);
         }
 

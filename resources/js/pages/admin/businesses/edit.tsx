@@ -27,6 +27,7 @@ interface Business {
     shopee_url: string | null;
     youtube_url: string | null;
     microsite_path: string | null;
+    subdomain_enabled: boolean;
 }
 
 export default function AdminBusinessEdit({ business }: { business: Business }) {
@@ -34,6 +35,7 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
         _method: 'put',
         name: business.name ?? '',
         slug: business.slug ?? '',
+        subdomain_enabled: business.subdomain_enabled ?? false,
         category: business.category ?? 'kuliner',
         village: business.village ?? '',
         description: business.description ?? '',
@@ -240,12 +242,43 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
                         Buka link aktif saat ini: turen.id/@{business.slug} ↗
                     </a>
 
-                    <p className="mt-3 text-xs text-muted-foreground">
-                        Subdomain sendiri (misal <span className="font-medium">{business.slug}.turen.id</span>) bisa
-                        diaktifkan belakangan sebagai upgrade manual — perlu setup wildcard DNS + SSL di server
-                        dulu. Belum otomatis aktif untuk sekarang. Handle di atas juga yang akan dipakai sebagai
-                        nama subdomain kalau nanti diaktifkan.
-                    </p>
+                    <div className="mt-4 border-t pt-4">
+                        <label className="flex items-start gap-2 text-sm">
+                            <input
+                                type="checkbox"
+                                checked={data.subdomain_enabled}
+                                onChange={(e) => setData('subdomain_enabled', e.target.checked)}
+                                className="mt-0.5 rounded border-gray-300"
+                            />
+                            <span>
+                                Aktifkan subdomain sendiri untuk klien ini
+                                <span className="block text-xs text-muted-foreground">
+                                    Butuh wildcard DNS + SSL sudah aktif di server. Handle di atas dipakai sebagai
+                                    nama subdomain-nya.
+                                </span>
+                            </span>
+                        </label>
+
+                        {data.subdomain_enabled && (
+                            <a
+                                href={`https://${business.slug}.turen.id`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="mt-2 inline-block text-sm font-medium text-emerald-700 hover:underline"
+                            >
+                                {business.slug}.turen.id ↗
+                            </a>
+                        )}
+
+                        <button
+                            type="button"
+                            onClick={submit}
+                            disabled={processing}
+                            className="mt-3 block rounded-md bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-800 disabled:opacity-50"
+                        >
+                            Simpan Setelan Subdomain
+                        </button>
+                    </div>
                 </div>
 
                 <div className="mt-4 rounded-xl border p-4">
