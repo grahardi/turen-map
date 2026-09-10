@@ -1,5 +1,5 @@
-import { Head, Link, router } from '@inertiajs/react';
-import { CheckCircle2, ChevronRight, Clock, Compass, Heart, MapPin, PlusCircle, Search, Trash2, X } from 'lucide-react';
+import { Head, Link } from '@inertiajs/react';
+import { CheckCircle2, ChevronRight, Clock, Compass, Heart, MapPin, PlusCircle, Search, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
@@ -58,14 +58,6 @@ export default function BusinessIndex({ businesses }: PageProps) {
             return matchesCategory && matchesQuery;
         });
     }, [businesses, activeCategory, query]);
-
-    function handleDelete(e: React.MouseEvent, id: number) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (confirm('Hapus data ini?')) {
-            router.delete(`/bisnis/${id}`);
-        }
-    }
 
     return (
         <>
@@ -248,16 +240,10 @@ export default function BusinessIndex({ businesses }: PageProps) {
                                             )}
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
 
-                                            <div className="absolute top-3 right-3 left-3 flex items-center justify-between">
+                                            <div className="absolute top-3 left-3">
                                                 <span className="rounded-lg bg-white/90 px-2.5 py-1 text-[11px] font-bold text-slate-800 capitalize backdrop-blur">
                                                     {b.category}
                                                 </span>
-                                                <button
-                                                    onClick={(e) => handleDelete(e, b.id)}
-                                                    className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-slate-600 opacity-0 shadow-md backdrop-blur transition-opacity group-hover:opacity-100 hover:text-rose-600"
-                                                >
-                                                    <Trash2 className="h-3.5 w-3.5" />
-                                                </button>
                                             </div>
 
                                             {b.hours && (

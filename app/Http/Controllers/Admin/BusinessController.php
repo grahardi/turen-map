@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Business;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,26 +13,47 @@ class BusinessController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('businesses/index', [
+        return Inertia::render('admin/businesses/index', [
             'businesses' => Business::orderBy('name')->get(),
-        ]);
-    }
-
-    public function show(Business $business): Response
-    {
-        return Inertia::render('businesses/show', [
-            'business' => $business,
         ]);
     }
 
     public function create(): Response
     {
-        return Inertia::render('businesses/create');
+        return Inertia::render('admin/businesses/create');
     }
 
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
+        Business::create($this->validated($request));
+
+        return to_route('admin.businesses.index')->with('success', 'Data berhasil ditambahkan.');
+    }
+
+    public function edit(Business $business): Response
+    {
+        return Inertia::render('admin/businesses/edit', [
+            'business' => $business,
+        ]);
+    }
+
+    public function update(Request $request, Business $business): RedirectResponse
+    {
+        $business->update($this->validated($request));
+
+        return to_route('admin.businesses.index')->with('success', 'Data berhasil diperbarui.');
+    }
+
+    public function destroy(Business $business): RedirectResponse
+    {
+        $business->delete();
+
+        return to_route('admin.businesses.index')->with('success', 'Data berhasil dihapus.');
+    }
+
+    protected function validated(Request $request): array
+    {
+        return $request->validate([
             'name' => 'required|string|max:255',
             'category' => 'required|string|max:100',
             'village' => 'nullable|string|max:100',
@@ -50,9 +72,5 @@ class BusinessController extends Controller
             'shopee_url' => 'nullable|url|max:500',
             'youtube_url' => 'nullable|url|max:500',
         ]);
-
-        Business::create($validated);
-
-        return to_route('businesses.index');
     }
 }
