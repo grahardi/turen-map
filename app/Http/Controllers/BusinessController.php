@@ -43,6 +43,12 @@ class BusinessController extends Controller
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
             'photo_url' => 'nullable|url|max:500',
+            'website_url' => 'nullable|url|max:500',
+            'facebook_url' => 'nullable|url|max:500',
+            'instagram_url' => 'nullable|url|max:500',
+            'tiktok_url' => 'nullable|url|max:500',
+            'shopee_url' => 'nullable|url|max:500',
+            'youtube_url' => 'nullable|url|max:500',
         ]);
 
         Business::create($validated);

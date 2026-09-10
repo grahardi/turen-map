@@ -18,6 +18,12 @@ export default function BusinessCreate() {
         latitude: '',
         longitude: '',
         photo_url: '',
+        website_url: '',
+        facebook_url: '',
+        instagram_url: '',
+        tiktok_url: '',
+        shopee_url: '',
+        youtube_url: '',
     });
 
     function submit(e: React.FormEvent) {
@@ -149,6 +155,82 @@ export default function BusinessCreate() {
                                 placeholder="https://..."
                                 className="mt-1.5"
                             />
+                        </div>
+
+                        <div>
+                            <Label htmlFor="website_url" className="text-slate-800">
+                                Website (opsional)
+                            </Label>
+                            <Input
+                                id="website_url"
+                                value={data.website_url}
+                                onChange={(e) => setData('website_url', e.target.value)}
+                                placeholder="https://tokoanda.com"
+                                className="mt-1.5"
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                            <div>
+                                <Label htmlFor="facebook_url" className="text-slate-800">
+                                    Facebook
+                                </Label>
+                                <Input
+                                    id="facebook_url"
+                                    value={data.facebook_url}
+                                    onChange={(e) => setData('facebook_url', e.target.value)}
+                                    placeholder="https://facebook.com/..."
+                                    className="mt-1.5"
+                                />
+                            </div>
+                            <div>
+                                <Label htmlFor="instagram_url" className="text-slate-800">
+                                    Instagram
+                                </Label>
+                                <Input
+                                    id="instagram_url"
+                                    value={data.instagram_url}
+                                    onChange={(e) => setData('instagram_url', e.target.value)}
+                                    placeholder="https://instagram.com/..."
+                                    className="mt-1.5"
+                                />
+                            </div>
+                            <div>
+                                <Label htmlFor="tiktok_url" className="text-slate-800">
+                                    TikTok
+                                </Label>
+                                <Input
+                                    id="tiktok_url"
+                                    value={data.tiktok_url}
+                                    onChange={(e) => setData('tiktok_url', e.target.value)}
+                                    placeholder="https://tiktok.com/@..."
+                                    className="mt-1.5"
+                                />
+                            </div>
+                            <div>
+                                <Label htmlFor="shopee_url" className="text-slate-800">
+                                    Shopee
+                                </Label>
+                                <Input
+                                    id="shopee_url"
+                                    value={data.shopee_url}
+                                    onChange={(e) => setData('shopee_url', e.target.value)}
+                                    placeholder="https://shopee.co.id/..."
+                                    className="mt-1.5"
+                                />
+                            </div>
+                            <div className="col-span-2">
+                                <Label htmlFor="youtube_url" className="text-slate-800">
+                                    YouTube
+                                </Label>
+                                <Input
+                                    id="youtube_url"
+                                    value={data.youtube_url}
+                                    onChange={(e) => setData('youtube_url', e.target.value)}
+                                    placeholder="https://youtube.com/@..."
+                                    className="mt-1.5"
+                                />
+                            </div>
                         </div>
 
                         <div>

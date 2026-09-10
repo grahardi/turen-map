@@ -14,6 +14,12 @@ interface Business {
     latitude: number | null;
     longitude: number | null;
     photo_url: string | null;
+    website_url: string | null;
+    facebook_url: string | null;
+    instagram_url: string | null;
+    tiktok_url: string | null;
+    shopee_url: string | null;
+    youtube_url: string | null;
 }
 
 interface PageProps {
@@ -104,6 +110,46 @@ export default function BusinessShow({ business }: PageProps) {
                                     </span>
                                 )}
                             </div>
+
+                            {(business.website_url ||
+                                business.facebook_url ||
+                                business.instagram_url ||
+                                business.tiktok_url ||
+                                business.shopee_url ||
+                                business.youtube_url) && (
+                                <div className="mt-4 flex flex-wrap gap-2">
+                                    {business.website_url && (
+                                        <a href={business.website_url} target="_blank" rel="noreferrer" className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">
+                                            🌐 Website
+                                        </a>
+                                    )}
+                                    {business.facebook_url && (
+                                        <a href={business.facebook_url} target="_blank" rel="noreferrer" className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">
+                                            Facebook
+                                        </a>
+                                    )}
+                                    {business.instagram_url && (
+                                        <a href={business.instagram_url} target="_blank" rel="noreferrer" className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">
+                                            Instagram
+                                        </a>
+                                    )}
+                                    {business.tiktok_url && (
+                                        <a href={business.tiktok_url} target="_blank" rel="noreferrer" className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">
+                                            TikTok
+                                        </a>
+                                    )}
+                                    {business.shopee_url && (
+                                        <a href={business.shopee_url} target="_blank" rel="noreferrer" className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">
+                                            Shopee
+                                        </a>
+                                    )}
+                                    {business.youtube_url && (
+                                        <a href={business.youtube_url} target="_blank" rel="noreferrer" className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">
+                                            YouTube
+                                        </a>
+                                    )}
+                                </div>
+                            )}
 
                             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                                 {waLink && (
