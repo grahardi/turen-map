@@ -52,7 +52,7 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
         youtube_url: business.youtube_url ?? '',
     });
 
-    function submit(e: React.FormEvent) {
+    function submit(e: React.SyntheticEvent) {
         e.preventDefault();
         post(`/admin/bisnis/${business.slug}`, { forceFormData: true });
     }
@@ -93,21 +93,6 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
                         <Label htmlFor="name">Nama usaha / lokasi</Label>
                         <Input id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} className="mt-1.5" />
                         {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
-                    </div>
-
-                    <div>
-                        <Label htmlFor="slug">Handle / URL</Label>
-                        <div className="mt-1.5 flex items-center gap-1 text-sm">
-                            <span className="text-muted-foreground">turen.id/@</span>
-                            <Input
-                                id="slug"
-                                value={data.slug}
-                                onChange={(e) => setData('slug', e.target.value.toLowerCase())}
-                                className="flex-1"
-                            />
-                        </div>
-                        <p className="mt-1 text-xs text-muted-foreground">Huruf kecil, angka, dan tanda hubung (-) saja.</p>
-                        {errors.slug && <p className="mt-1 text-xs text-red-600">{errors.slug}</p>}
                     </div>
 
                     <div>
@@ -225,18 +210,41 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
                     <p className="mt-1 text-xs text-muted-foreground">
                         Link default bisnis ini di direktori — selalu aktif, tidak perlu setup tambahan.
                     </p>
+
+                    <div className="mt-2 flex items-center gap-1 text-sm">
+                        <span className="text-muted-foreground">turen.id/@</span>
+                        <Input
+                            id="slug"
+                            value={data.slug}
+                            onChange={(e) => setData('slug', e.target.value.toLowerCase())}
+                            className="flex-1"
+                        />
+                        <button
+                            type="button"
+                            onClick={submit}
+                            disabled={processing}
+                            className="shrink-0 rounded-md bg-emerald-600 px-3 py-2 text-xs font-semibold text-white hover:bg-emerald-700 disabled:opacity-50"
+                        >
+                            Simpan
+                        </button>
+                    </div>
+                    <p className="mt-1 text-xs text-muted-foreground">Huruf kecil, angka, dan tanda hubung (-) saja.</p>
+                    {errors.slug && <p className="mt-1 text-xs text-red-600">{errors.slug}</p>}
+
                     <a
                         href={`https://turen.id/@${business.slug}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="mt-2 inline-block text-sm font-medium text-emerald-700 hover:underline"
+                        className="mt-3 inline-block text-sm font-medium text-emerald-700 hover:underline"
                     >
-                        turen.id/@{business.slug}
+                        Buka link aktif saat ini: turen.id/@{business.slug} ↗
                     </a>
+
                     <p className="mt-3 text-xs text-muted-foreground">
                         Subdomain sendiri (misal <span className="font-medium">{business.slug}.turen.id</span>) bisa
                         diaktifkan belakangan sebagai upgrade manual — perlu setup wildcard DNS + SSL di server
-                        dulu. Belum otomatis aktif untuk sekarang.
+                        dulu. Belum otomatis aktif untuk sekarang. Handle di atas juga yang akan dipakai sebagai
+                        nama subdomain kalau nanti diaktifkan.
                     </p>
                 </div>
 

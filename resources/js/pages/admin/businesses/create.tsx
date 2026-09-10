@@ -8,7 +8,6 @@ const CATEGORY_OPTIONS = ['kuliner', 'wisata', 'industri', 'kesehatan', 'pasar',
 export default function AdminBusinessCreate() {
     const { data, setData, post, processing, errors } = useForm({
         name: '',
-        slug: '',
         category: 'kuliner',
         village: '',
         description: '',
@@ -47,22 +46,6 @@ export default function AdminBusinessCreate() {
                         <Label htmlFor="name">Nama usaha / lokasi</Label>
                         <Input id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} className="mt-1.5" />
                         {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
-                    </div>
-
-                    <div>
-                        <Label htmlFor="slug">Handle / URL (opsional)</Label>
-                        <div className="mt-1.5 flex items-center gap-1 text-sm">
-                            <span className="text-muted-foreground">turen.id/@</span>
-                            <Input
-                                id="slug"
-                                value={data.slug}
-                                onChange={(e) => setData('slug', e.target.value.toLowerCase())}
-                                placeholder="otomatis dari nama kalau dikosongkan"
-                                className="flex-1"
-                            />
-                        </div>
-                        <p className="mt-1 text-xs text-muted-foreground">Huruf kecil, angka, dan tanda hubung (-) saja.</p>
-                        {errors.slug && <p className="mt-1 text-xs text-red-600">{errors.slug}</p>}
                     </div>
 
                     <div>
