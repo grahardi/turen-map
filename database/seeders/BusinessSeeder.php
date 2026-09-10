@@ -15,20 +15,24 @@ class BusinessSeeder extends Seeder
     {
         $examples = [
             [
-                'name' => '(Contoh) Toko Kelontong Sumber Rejeki',
-                'category' => 'umkm',
-                'village' => 'Turen',
+                'name' => '(Contoh) Bakso Sumber Rejeki',
+                'category' => 'kuliner',
+                'village' => 'Turen Kota',
                 'address' => 'Jl. Contoh No. 1, Turen',
                 'description' => 'Data contoh — silakan hapus dan ganti dengan data asli.',
                 'phone' => null,
+                'hours' => '08.00 - 20.00 WIB',
+                'is_verified' => true,
             ],
             [
                 'name' => '(Contoh) Bengkel Motor Jaya',
-                'category' => 'toko',
-                'village' => 'Talok',
-                'address' => 'Jl. Contoh No. 2, Talok',
+                'category' => 'jasa',
+                'village' => 'Sananrejo',
+                'address' => 'Jl. Contoh No. 2, Sananrejo',
                 'description' => 'Data contoh — silakan hapus dan ganti dengan data asli.',
                 'phone' => null,
+                'hours' => '07.00 - 17.00 WIB',
+                'is_verified' => false,
             ],
         ];
 

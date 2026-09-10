@@ -17,6 +17,13 @@ class BusinessController extends Controller
         ]);
     }
 
+    public function show(Business $business): Response
+    {
+        return Inertia::render('businesses/show', [
+            'business' => $business,
+        ]);
+    }
+
     public function create(): Response
     {
         return Inertia::render('businesses/create');
@@ -31,6 +38,8 @@ class BusinessController extends Controller
             'description' => 'nullable|string',
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:30',
+            'hours' => 'nullable|string|max:100',
+            'is_verified' => 'boolean',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
             'photo_url' => 'nullable|url|max:500',

@@ -16,6 +16,8 @@ class Business extends Model
         'description',
         'address',
         'phone',
+        'hours',
+        'is_verified',
         'latitude',
         'longitude',
         'photo_url',
@@ -26,6 +28,7 @@ class Business extends Model
         return [
             'latitude' => 'float',
             'longitude' => 'float',
+            'is_verified' => 'boolean',
         ];
     }
 }
