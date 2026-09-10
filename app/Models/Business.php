@@ -29,6 +29,7 @@ class Business extends Model
         'tiktok_url',
         'shopee_url',
         'youtube_url',
+        'microsite_path',
     ];
 
     protected function casts(): array

@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 
 interface Business {
     id: number;
+    slug: string;
     name: string;
     category: string;
     village: string | null;
@@ -222,7 +223,7 @@ export default function BusinessIndex({ businesses }: PageProps) {
                             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                                 {filtered.map((b) => (
                                     <Link
-                                        href={`/bisnis/${b.id}`}
+                                        href={`/bisnis/${b.slug}`}
                                         key={b.id}
                                         className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm transition-all duration-300 hover:shadow-xl"
                                     >

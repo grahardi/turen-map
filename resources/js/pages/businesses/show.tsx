@@ -20,6 +20,7 @@ interface Business {
     tiktok_url: string | null;
     shopee_url: string | null;
     youtube_url: string | null;
+    microsite_path: string | null;
 }
 
 interface PageProps {
@@ -172,6 +173,16 @@ export default function BusinessShow({ business }: PageProps) {
                                     <MapPin className="h-4 w-4" />
                                     Lihat di Google Maps
                                 </a>
+                                {business.microsite_path && (
+                                    <a
+                                        href={`/situs/${business.slug}`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-200 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                                    >
+                                        Lihat Situs Resmi
+                                    </a>
+                                )}
                             </div>
                         </div>
                     </div>

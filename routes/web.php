@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BusinessController as AdminBusinessController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MicrositeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BusinessController::class, 'index'])->name('home');
@@ -11,6 +12,8 @@ Route::get('/bisnis', [BusinessController::class, 'index'])->name('businesses.in
 Route::get('/bisnis/tambah', [BusinessController::class, 'create'])->name('businesses.create');
 Route::post('/bisnis', [BusinessController::class, 'store'])->name('businesses.store');
 Route::get('/bisnis/{business}', [BusinessController::class, 'show'])->name('businesses.show');
+
+Route::get('/situs/{business}', [MicrositeController::class, 'show'])->name('microsite.show');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -22,6 +25,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/bisnis/{business}/edit', [AdminBusinessController::class, 'edit'])->name('businesses.edit');
         Route::put('/bisnis/{business}', [AdminBusinessController::class, 'update'])->name('businesses.update');
         Route::delete('/bisnis/{business}', [AdminBusinessController::class, 'destroy'])->name('businesses.destroy');
+        Route::post('/bisnis/{business}/situs', [AdminBusinessController::class, 'uploadMicrosite'])->name('businesses.microsite.upload');
+        Route::delete('/bisnis/{business}/situs', [AdminBusinessController::class, 'deleteMicrosite'])->name('businesses.microsite.delete');
     });
 });
 

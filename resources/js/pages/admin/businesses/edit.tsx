@@ -1,5 +1,6 @@
 import { Head, Link, useForm } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
+import { useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
@@ -25,6 +26,7 @@ interface Business {
     tiktok_url: string | null;
     shopee_url: string | null;
     youtube_url: string | null;
+    microsite_path: string | null;
 }
 
 export default function AdminBusinessEdit({ business }: { business: Business }) {
@@ -51,6 +53,27 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
     function submit(e: React.FormEvent) {
         e.preventDefault();
         put(`/admin/bisnis/${business.slug}`);
+    }
+
+    const micrositeForm = useForm({ file: null as File | null });
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    function uploadMicrosite(e: React.FormEvent) {
+        e.preventDefault();
+        if (!micrositeForm.data.file) return;
+        micrositeForm.post(`/admin/bisnis/${business.slug}/situs`, {
+            forceFormData: true,
+            onSuccess: () => {
+                micrositeForm.setData('file', null);
+                if (fileInputRef.current) fileInputRef.current.value = '';
+            },
+        });
+    }
+
+    function deleteMicrosite() {
+        if (confirm('Hapus situs klien ini?')) {
+            micrositeForm.delete(`/admin/bisnis/${business.slug}/situs`);
+        }
     }
 
     return (
@@ -174,6 +197,53 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
                         Simpan Perubahan
                     </button>
                 </form>
+
+                <div className="mt-8 rounded-xl border p-4">
+                    <h2 className="text-sm font-semibold">Situs Klien (HTML statis)</h2>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                        Upload file .html custom milik bisnis ini. Nantinya bisa dipromosikan jadi subdomain sendiri
+                        (misal baksorahmat.turen.id) — untuk sekarang diakses lewat link statis di bawah.
+                    </p>
+
+                    {business.microsite_path ? (
+                        <div className="mt-3 flex items-center justify-between rounded-lg bg-muted/50 px-3 py-2">
+                            <a
+                                href={`/situs/${business.slug}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-sm font-medium text-emerald-700 hover:underline"
+                            >
+                                Lihat situs: /situs/{business.slug}
+                            </a>
+                            <button
+                                onClick={deleteMicrosite}
+                                className="text-xs font-semibold text-red-600 hover:underline"
+                            >
+                                Hapus
+                            </button>
+                        </div>
+                    ) : (
+                        <form onSubmit={uploadMicrosite} className="mt-3 flex items-center gap-2">
+                            <input
+                                ref={fileInputRef}
+                                type="file"
+                                accept=".html,.htm"
+                                onChange={(e) => micrositeForm.setData('file', e.target.files?.[0] ?? null)}
+                                className="flex-1 text-sm"
+                            />
+                            <button
+                                type="submit"
+                                disabled={micrositeForm.processing || !micrositeForm.data.file}
+                                className="rounded-md bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-800 disabled:opacity-50"
+                            >
+                                Upload
+                            </button>
+                        </form>
+                    )}
+                    {micrositeForm.errors.file && (
+                        <p className="mt-1 text-xs text-red-600">{micrositeForm.errors.file}</p>
+                    )}
+                </div>
             </div>
         </>
     );

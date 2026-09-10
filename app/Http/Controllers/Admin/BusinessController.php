@@ -51,6 +51,42 @@ class BusinessController extends Controller
         return to_route('admin.businesses.index')->with('success', 'Data berhasil dihapus.');
     }
 
+    public function uploadMicrosite(Request $request, Business $business): RedirectResponse
+    {
+        $request->validate([
+            'file' => 'required|file|max:5120', // max 5MB
+        ]);
+
+        $file = $request->file('file');
+        $ext = strtolower($file->getClientOriginalExtension());
+
+        if (! in_array($ext, ['html', 'htm'])) {
+            return back()->withErrors(['file' => 'File harus berformat .html atau .htm']);
+        }
+
+        // Hapus file lama kalau ada
+        if ($business->microsite_path) {
+            \Illuminate\Support\Facades\Storage::disk('local')->delete($business->microsite_path);
+        }
+
+        $path = "microsites/{$business->slug}.html";
+        \Illuminate\Support\Facades\Storage::disk('local')->put($path, file_get_contents($file->getRealPath()));
+
+        $business->update(['microsite_path' => $path]);
+
+        return to_route('admin.businesses.index')->with('success', 'Situs klien berhasil diunggah.');
+    }
+
+    public function deleteMicrosite(Business $business): RedirectResponse
+    {
+        if ($business->microsite_path) {
+            \Illuminate\Support\Facades\Storage::disk('local')->delete($business->microsite_path);
+            $business->update(['microsite_path' => null]);
+        }
+
+        return to_route('admin.businesses.index')->with('success', 'Situs klien dihapus.');
+    }
+
     protected function validated(Request $request): array
     {
         return $request->validate([
