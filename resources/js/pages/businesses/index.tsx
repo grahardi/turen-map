@@ -21,26 +21,7 @@ interface PageProps {
     businesses: Business[];
 }
 
-// Strip dekoratif bergerigi ala umbul-umbul/bunting pasar, jadi pemisah sebelum footer.
-function BuntingDivider() {
-    return (
-        <svg viewBox="0 0 100 6" preserveAspectRatio="none" className="block h-3 w-full text-[#1F4D3A]">
-            <polygon points="0,0 3,6 6,0" fill="currentColor" />
-            <polygon points="8,0 11,6 14,0" fill="currentColor" />
-            <polygon points="16,0 19,6 22,0" fill="currentColor" />
-            <polygon points="24,0 27,6 30,0" fill="currentColor" />
-            <polygon points="32,0 35,6 38,0" fill="currentColor" />
-            <polygon points="40,0 43,6 46,0" fill="currentColor" />
-            <polygon points="48,0 51,6 54,0" fill="currentColor" />
-            <polygon points="56,0 59,6 62,0" fill="currentColor" />
-            <polygon points="64,0 67,6 70,0" fill="currentColor" />
-            <polygon points="72,0 75,6 78,0" fill="currentColor" />
-            <polygon points="80,0 83,6 86,0" fill="currentColor" />
-            <polygon points="88,0 91,6 94,0" fill="currentColor" />
-            <polygon points="96,0 99,6 100,4" fill="currentColor" />
-        </svg>
-    );
-}
+const SOCIALS = ['IG', 'FB', 'WA'];
 
 export default function BusinessIndex({ businesses }: PageProps) {
     const [query, setQuery] = useState('');
@@ -72,26 +53,39 @@ export default function BusinessIndex({ businesses }: PageProps) {
         <>
             <Head title="Direktori Bisnis Kecamatan Turen" />
             <div className="min-h-screen bg-white font-['Work_Sans']">
-                {/* Header — gapura hijau membingkai halaman */}
-                <header className="bg-[#1F4D3A] px-6 pt-10 pb-8">
-                    <div className="mx-auto max-w-5xl">
-                        <p className="text-sm font-medium tracking-wide text-[#E8A33D]">Kecamatan Turen, Kabupaten Malang</p>
-                        <h1 className="mt-1 font-['Fraunces'] text-4xl font-semibold text-white sm:text-5xl">
-                            Direktori Turen
-                        </h1>
-                        <p className="mt-2 max-w-md text-sm text-[#CFE0D6]">
-                            Kumpulan usaha, layanan, dan lokasi penting di seluruh desa se-Kecamatan Turen.
+                {/* Hero penuh, gradasi hijau sawah dengan overlay */}
+                <section className="relative overflow-hidden bg-[#1F4D3A] pt-16 pb-36">
+                    <div
+                        className="absolute inset-0 opacity-20"
+                        style={{
+                            backgroundImage:
+                                'radial-gradient(circle at 15% 20%, #E8A33D 0%, transparent 35%), radial-gradient(circle at 85% 60%, #FFFFFF 0%, transparent 30%)',
+                        }}
+                    />
+                    <div className="relative mx-auto max-w-4xl px-6 text-center">
+                        <p className="text-sm font-medium tracking-wide text-[#E8A33D]">
+                            Kecamatan Turen · Kabupaten Malang
                         </p>
+                        <h1 className="mt-3 font-['Fraunces'] text-4xl font-semibold text-white sm:text-5xl">
+                            Semua yang dicari ada di Turen
+                        </h1>
+                        <p className="mx-auto mt-3 max-w-md text-sm text-[#CFE0D6]">
+                            Direktori usaha, layanan, dan lokasi penting di seluruh desa se-Kecamatan Turen.
+                        </p>
+                    </div>
+                </section>
 
-                        {/* Search bar — kotak putih tegas, tertanam di pita hijau */}
-                        <div className="mt-6 flex items-center gap-3">
+                {/* Search card mengambang, overlap ke hero */}
+                <div className="relative z-10 mx-auto -mt-20 max-w-4xl px-6">
+                    <div className="rounded-xl bg-white p-5 shadow-[0_20px_50px_-15px_rgba(31,77,58,0.35)]">
+                        <div className="flex items-center gap-3">
                             <div className="relative flex-1">
                                 <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-[#8A8478]" />
                                 <Input
                                     value={query}
                                     onChange={(e) => setQuery(e.target.value)}
                                     placeholder="Cari nama usaha atau desa..."
-                                    className="h-14 rounded-md border-none bg-white pl-12 text-base text-[#2A2118] shadow-none"
+                                    className="h-12 rounded-md border-[#E5DFD1] pl-12 text-base text-[#2A2118] shadow-none"
                                 />
                                 {query && (
                                     <button
@@ -104,24 +98,23 @@ export default function BusinessIndex({ businesses }: PageProps) {
                             </div>
                             <Link
                                 href="/bisnis/tambah"
-                                className="flex h-14 shrink-0 items-center gap-2 rounded-md bg-[#E8A33D] px-5 text-sm font-semibold text-[#2A2118] hover:bg-[#dc9530]"
+                                className="flex h-12 shrink-0 items-center gap-2 rounded-md bg-[#E8A33D] px-5 text-sm font-semibold text-[#2A2118] hover:bg-[#dc9530]"
                             >
                                 <Plus className="h-4 w-4" />
-                                <span className="hidden sm:inline">Tambah Data</span>
+                                <span className="hidden sm:inline">Tambah</span>
                             </Link>
                         </div>
 
-                        {/* Filter kategori — tab underline */}
-                        <div className="mt-6 flex gap-6 overflow-x-auto border-b border-white/15 [scrollbar-width:none]">
+                        <div className="mt-4 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
                             {categories.map((cat) => (
                                 <button
                                     key={cat}
                                     onClick={() => setActiveCategory(cat)}
                                     className={cn(
-                                        'shrink-0 border-b-2 pb-3 text-sm font-medium capitalize transition-colors',
+                                        'shrink-0 rounded-md px-4 py-1.5 text-sm font-medium capitalize transition-colors',
                                         activeCategory === cat
-                                            ? 'border-[#E8A33D] text-white'
-                                            : 'border-transparent text-[#9FB8AA] hover:text-white',
+                                            ? 'bg-[#1F4D3A] text-white'
+                                            : 'bg-[#F3EEE3] text-[#2A2118] hover:bg-[#e9e1cd]',
                                     )}
                                 >
                                     {cat}
@@ -129,10 +122,10 @@ export default function BusinessIndex({ businesses }: PageProps) {
                             ))}
                         </div>
                     </div>
-                </header>
+                </div>
 
                 {/* Konten */}
-                <main className="mx-auto max-w-5xl px-6 py-10">
+                <main className="mx-auto max-w-5xl px-6 pt-10 pb-16">
                     <p className="mb-5 text-sm text-[#8A8478]">{filtered.length} lokasi ditemukan</p>
 
                     {filtered.length === 0 ? (
@@ -147,7 +140,7 @@ export default function BusinessIndex({ businesses }: PageProps) {
                             {filtered.map((b) => (
                                 <div
                                     key={b.id}
-                                    className="group relative flex flex-col overflow-hidden rounded-md border border-[#E5DFD1] bg-white"
+                                    className="group relative flex flex-col overflow-hidden rounded-md border border-[#EFEAE0] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.04)] transition-shadow hover:shadow-[0_10px_30px_rgba(31,77,58,0.12)]"
                                 >
                                     <div className="relative h-40 w-full shrink-0 bg-[#F3EEE3]">
                                         {b.photo_url ? (
@@ -199,21 +192,29 @@ export default function BusinessIndex({ businesses }: PageProps) {
                     )}
                 </main>
 
-                <BuntingDivider />
-
-                {/* Footer — gapura hijau, cermin dari header */}
+                {/* Footer — ikon sosial bulat, info kontak */}
                 <footer className="bg-[#1F4D3A] px-6 py-10">
-                    <div className="mx-auto flex max-w-5xl flex-col justify-between gap-6 sm:flex-row">
+                    <div className="mx-auto flex max-w-5xl flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
                         <div>
                             <p className="font-['Fraunces'] text-xl font-semibold text-white">Direktori Turen</p>
                             <p className="mt-1 max-w-xs text-sm text-[#9FB8AA]">
                                 Dirawat oleh warga untuk warga Kecamatan Turen, Kabupaten Malang, Jawa Timur.
                             </p>
                         </div>
-                        <div className="text-sm text-[#9FB8AA]">
-                            <p className="font-medium text-white">Kantor Kecamatan Turen</p>
-                            <p className="mt-1">Jl. Panglima Sudirman, Turen, Kabupaten Malang</p>
+
+                        <div className="flex gap-3">
+                            {SOCIALS.map((s) => (
+                                <div
+                                    key={s}
+                                    className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-white transition-colors hover:bg-[#E8A33D] hover:text-[#2A2118]"
+                                >
+                                    {s}
+                                </div>
+                            ))}
                         </div>
+                    </div>
+                    <div className="mx-auto mt-6 max-w-5xl border-t border-white/10 pt-4 text-xs text-[#9FB8AA]">
+                        Kantor Kecamatan Turen · Jl. Panglima Sudirman, Turen, Kabupaten Malang
                     </div>
                 </footer>
             </div>
