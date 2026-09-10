@@ -69,7 +69,7 @@ export default function BusinessIndex({ businesses }: PageProps) {
 
     return (
         <>
-            <Head title="TurenBiz — Direktori Usaha & Destinasi Turen" />
+            <Head title="TurenID — Direktori Usaha & Destinasi Turen" />
             <div className="flex min-h-screen flex-col bg-slate-50 font-['Inter'] text-slate-800">
                 {/* Header sticky */}
                 <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur-md">
@@ -80,7 +80,7 @@ export default function BusinessIndex({ businesses }: PageProps) {
                             </div>
                             <div>
                                 <span className="block text-xl font-bold tracking-tight text-slate-900">
-                                    Turen<span className="text-emerald-600">Biz</span>
+                                    Turen<span className="text-emerald-600">ID</span>
                                 </span>
                                 <span className="block text-[10px] font-medium tracking-wider text-slate-500 uppercase">
                                     Direktori Turen Malang
@@ -324,7 +324,7 @@ export default function BusinessIndex({ businesses }: PageProps) {
                                         Punya usaha atau toko di Turen?
                                     </h2>
                                     <p className="text-sm leading-relaxed text-slate-300">
-                                        Daftarkan usaha secara gratis di direktori TurenBiz agar mudah ditemukan
+                                        Daftarkan usaha secara gratis di direktori TurenID agar mudah ditemukan
                                         warga Turen dan wisatawan.
                                     </p>
                                 </div>
@@ -359,7 +359,7 @@ export default function BusinessIndex({ businesses }: PageProps) {
                                         T
                                     </div>
                                     <span className="text-lg font-bold text-white">
-                                        Turen<span className="text-emerald-500">Biz</span>
+                                        Turen<span className="text-emerald-500">ID</span>
                                     </span>
                                 </div>
                                 <p className="leading-relaxed text-slate-400">
@@ -412,7 +412,7 @@ export default function BusinessIndex({ businesses }: PageProps) {
                             </div>
                         </div>
                         <div className="border-t border-slate-800 pt-6 text-center text-slate-500">
-                            © {new Date().getFullYear()} TurenBiz — Direktori Kecamatan Turen
+                            © {new Date().getFullYear()} TurenID — Direktori Kecamatan Turen
                         </div>
                     </div>
                 </footer>

@@ -23,7 +23,7 @@ interface PageProps {
 export default function BusinessShow({ business }: PageProps) {
     const waLink = business.phone
         ? `https://wa.me/62${business.phone.replace(/[^0-9]/g, '').replace(/^0/, '')}?text=${encodeURIComponent(
-              `Halo ${business.name}, saya menemukan kontak Anda dari TurenBiz.`,
+              `Halo ${business.name}, saya menemukan kontak Anda dari TurenID.`,
           )}`
         : null;
 
@@ -35,7 +35,7 @@ export default function BusinessShow({ business }: PageProps) {
 
     return (
         <>
-            <Head title={`${business.name} — TurenBiz`} />
+            <Head title={`${business.name} — TurenID`} />
             <div className="min-h-screen bg-slate-50 font-['Inter']">
                 <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur-md">
                     <div className="mx-auto flex h-16 max-w-3xl items-center px-4 sm:px-6">
@@ -96,7 +96,7 @@ export default function BusinessShow({ business }: PageProps) {
 
                             <div className="mt-5 flex flex-wrap gap-2">
                                 <span className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-700">
-                                    ✓ Terdaftar di TurenBiz
+                                    ✓ Terdaftar di TurenID
                                 </span>
                                 {business.village && (
                                     <span className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-700">
