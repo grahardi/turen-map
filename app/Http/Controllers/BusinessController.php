@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\HandlesBusinessPhoto;
 use App\Models\Business;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -10,6 +11,8 @@ use Inertia\Response;
 
 class BusinessController extends Controller
 {
+    use HandlesBusinessPhoto;
+
     public function index(): Response
     {
         return Inertia::render('businesses/index', [
@@ -44,7 +47,7 @@ class BusinessController extends Controller
             'is_verified' => 'boolean',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
-            'photo_url' => 'nullable|url|max:500',
+            'photo' => 'nullable|image|max:4096',
             'website_url' => 'nullable|url|max:500',
             'facebook_url' => 'nullable|url|max:500',
             'instagram_url' => 'nullable|url|max:500',
@@ -52,6 +55,12 @@ class BusinessController extends Controller
             'shopee_url' => 'nullable|url|max:500',
             'youtube_url' => 'nullable|url|max:500',
         ]);
+
+        unset($validated['photo']);
+
+        if ($photoUrl = $this->storeUploadedPhoto($request)) {
+            $validated['photo_url'] = $photoUrl;
+        }
 
         Business::create($validated);
 

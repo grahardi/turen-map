@@ -17,7 +17,7 @@ export default function BusinessCreate() {
         is_verified: false as boolean,
         latitude: '',
         longitude: '',
-        photo_url: '',
+        photo: null as File | null,
         website_url: '',
         facebook_url: '',
         instagram_url: '',
@@ -28,7 +28,7 @@ export default function BusinessCreate() {
 
     function submit(e: React.FormEvent) {
         e.preventDefault();
-        post('/bisnis');
+        post('/bisnis', { forceFormData: true });
     }
 
     return (
@@ -145,16 +145,17 @@ export default function BusinessCreate() {
                         </div>
 
                         <div>
-                            <Label htmlFor="photo_url" className="text-slate-800">
-                                URL Foto (opsional)
+                            <Label htmlFor="photo" className="text-slate-800">
+                                Foto (opsional)
                             </Label>
-                            <Input
-                                id="photo_url"
-                                value={data.photo_url}
-                                onChange={(e) => setData('photo_url', e.target.value)}
-                                placeholder="https://..."
-                                className="mt-1.5"
+                            <input
+                                id="photo"
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => setData('photo', e.target.files?.[0] ?? null)}
+                                className="mt-1.5 block w-full text-sm"
                             />
+                            {errors.photo && <p className="mt-1 text-xs text-red-600">{errors.photo}</p>}
                         </div>
 
                         <div>

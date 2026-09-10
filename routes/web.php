@@ -4,7 +4,13 @@ use App\Http\Controllers\Admin\BusinessController as AdminBusinessController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MicrositeController;
+use App\Http\Controllers\TenantSiteController;
 use Illuminate\Support\Facades\Route;
+
+// Subdomain per klien, misal baksosolo.turen.id — didaftar duluan supaya dicek lebih dulu.
+Route::domain('{subdomain}.'.config('app.tenant_domain'))->group(function () {
+    Route::get('/', [TenantSiteController::class, 'show'])->name('tenant.show');
+});
 
 Route::get('/', [BusinessController::class, 'index'])->name('home');
 

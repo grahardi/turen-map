@@ -30,7 +30,8 @@ interface Business {
 }
 
 export default function AdminBusinessEdit({ business }: { business: Business }) {
-    const { data, setData, put, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
+        _method: 'put',
         name: business.name ?? '',
         category: business.category ?? 'kuliner',
         village: business.village ?? '',
@@ -41,7 +42,7 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
         is_verified: business.is_verified ?? false,
         latitude: business.latitude?.toString() ?? '',
         longitude: business.longitude?.toString() ?? '',
-        photo_url: business.photo_url ?? '',
+        photo: null as File | null,
         website_url: business.website_url ?? '',
         facebook_url: business.facebook_url ?? '',
         instagram_url: business.instagram_url ?? '',
@@ -52,7 +53,7 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
 
     function submit(e: React.FormEvent) {
         e.preventDefault();
-        put(`/admin/bisnis/${business.slug}`);
+        post(`/admin/bisnis/${business.slug}`, { forceFormData: true });
     }
 
     const micrositeForm = useForm({ file: null as File | null });
@@ -141,8 +142,13 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
                     </div>
 
                     <div>
-                        <Label htmlFor="photo_url">URL Foto</Label>
-                        <Input id="photo_url" value={data.photo_url} onChange={(e) => setData('photo_url', e.target.value)} placeholder="https://..." className="mt-1.5" />
+                        <Label htmlFor="photo">Foto</Label>
+                        {business.photo_url && (
+                            <img src={business.photo_url} alt={business.name} className="mt-1.5 mb-2 h-24 w-24 rounded-md object-cover" />
+                        )}
+                        <input id="photo" type="file" accept="image/*" onChange={(e) => setData('photo', e.target.files?.[0] ?? null)} className="mt-1.5 block w-full text-sm" />
+                        <p className="mt-1 text-xs text-muted-foreground">Kosongkan kalau tidak ingin mengganti foto.</p>
+                        {errors.photo && <p className="mt-1 text-xs text-red-600">{errors.photo}</p>}
                     </div>
 
                     <div>
@@ -199,10 +205,29 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
                 </form>
 
                 <div className="mt-8 rounded-xl border p-4">
+                    <h2 className="text-sm font-semibold">Subdomain Klien</h2>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                        Setiap bisnis otomatis punya subdomain sendiri berdasarkan slug-nya (butuh wildcard DNS +
+                        SSL di server sudah aktif).
+                    </p>
+                    <a
+                        href={`https://${business.slug}.turen.id`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-2 inline-block text-sm font-medium text-emerald-700 hover:underline"
+                    >
+                        {business.slug}.turen.id
+                    </a>
+                    <p className="mt-2 text-xs text-muted-foreground">
+                        Kalau ada file HTML custom (di bawah) diupload, subdomain ini akan menampilkan file itu.
+                        Kalau belum, otomatis redirect ke halaman detail direktori.
+                    </p>
+                </div>
+
+                <div className="mt-4 rounded-xl border p-4">
                     <h2 className="text-sm font-semibold">Situs Klien (HTML statis)</h2>
                     <p className="mt-1 text-xs text-muted-foreground">
-                        Upload file .html custom milik bisnis ini. Nantinya bisa dipromosikan jadi subdomain sendiri
-                        (misal baksorahmat.turen.id) — untuk sekarang diakses lewat link statis di bawah.
+                        Upload file .html custom milik bisnis ini — akan otomatis muncul di subdomain di atas.
                     </p>
 
                     {business.microsite_path ? (

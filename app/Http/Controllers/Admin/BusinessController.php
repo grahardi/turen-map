@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Concerns\HandlesBusinessPhoto;
 use App\Http\Controllers\Controller;
 use App\Models\Business;
 use Illuminate\Http\RedirectResponse;
@@ -11,6 +12,8 @@ use Inertia\Response;
 
 class BusinessController extends Controller
 {
+    use HandlesBusinessPhoto;
+
     public function index(): Response
     {
         return Inertia::render('admin/businesses/index', [
@@ -25,7 +28,13 @@ class BusinessController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        Business::create($this->validated($request));
+        $data = $this->validated($request);
+
+        if ($photoUrl = $this->storeUploadedPhoto($request)) {
+            $data['photo_url'] = $photoUrl;
+        }
+
+        Business::create($data);
 
         return to_route('admin.businesses.index')->with('success', 'Data berhasil ditambahkan.');
     }
@@ -39,7 +48,13 @@ class BusinessController extends Controller
 
     public function update(Request $request, Business $business): RedirectResponse
     {
-        $business->update($this->validated($request));
+        $data = $this->validated($request);
+
+        if ($photoUrl = $this->storeUploadedPhoto($request)) {
+            $data['photo_url'] = $photoUrl;
+        }
+
+        $business->update($data);
 
         return to_route('admin.businesses.index')->with('success', 'Data berhasil diperbarui.');
     }
@@ -100,7 +115,7 @@ class BusinessController extends Controller
             'is_verified' => 'boolean',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
-            'photo_url' => 'nullable|url|max:500',
+            'photo' => 'nullable|image|max:4096',
             'website_url' => 'nullable|url|max:500',
             'facebook_url' => 'nullable|url|max:500',
             'instagram_url' => 'nullable|url|max:500',
