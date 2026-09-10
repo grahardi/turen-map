@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Business;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -34,6 +35,10 @@ class BusinessController extends Controller
             $data['photo_url'] = $photoUrl;
         }
 
+        if (empty($data['slug'])) {
+            unset($data['slug']); // biarkan model auto-generate dari nama
+        }
+
         Business::create($data);
 
         return to_route('admin.businesses.index')->with('success', 'Data berhasil ditambahkan.');
@@ -48,10 +53,14 @@ class BusinessController extends Controller
 
     public function update(Request $request, Business $business): RedirectResponse
     {
-        $data = $this->validated($request);
+        $data = $this->validated($request, $business->id);
 
         if ($photoUrl = $this->storeUploadedPhoto($request)) {
             $data['photo_url'] = $photoUrl;
+        }
+
+        if (empty($data['slug'])) {
+            unset($data['slug']); // jangan timpa slug yang sudah ada dengan kosong
         }
 
         $business->update($data);
@@ -102,10 +111,17 @@ class BusinessController extends Controller
         return to_route('admin.businesses.index')->with('success', 'Situs klien dihapus.');
     }
 
-    protected function validated(Request $request): array
+    protected function validated(Request $request, ?int $ignoreId = null): array
     {
         return $request->validate([
             'name' => 'required|string|max:255',
+            'slug' => [
+                'nullable',
+                'string',
+                'max:255',
+                'regex:/^[a-z0-9]+(-[a-z0-9]+)*$/',
+                Rule::unique('businesses', 'slug')->ignore($ignoreId),
+            ],
             'category' => 'required|string|max:100',
             'village' => 'nullable|string|max:100',
             'description' => 'nullable|string',
@@ -122,6 +138,9 @@ class BusinessController extends Controller
             'tiktok_url' => 'nullable|url|max:500',
             'shopee_url' => 'nullable|url|max:500',
             'youtube_url' => 'nullable|url|max:500',
+        ], [
+            'slug.regex' => 'Handle hanya boleh huruf kecil, angka, dan tanda hubung (-), tanpa spasi.',
+            'slug.unique' => 'Handle ini sudah dipakai bisnis lain, coba yang lain.',
         ]);
     }
 }

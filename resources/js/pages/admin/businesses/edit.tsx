@@ -33,6 +33,7 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
     const { data, setData, post, processing, errors } = useForm({
         _method: 'put',
         name: business.name ?? '',
+        slug: business.slug ?? '',
         category: business.category ?? 'kuliner',
         village: business.village ?? '',
         description: business.description ?? '',
@@ -92,6 +93,21 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
                         <Label htmlFor="name">Nama usaha / lokasi</Label>
                         <Input id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} className="mt-1.5" />
                         {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
+                    </div>
+
+                    <div>
+                        <Label htmlFor="slug">Handle / URL</Label>
+                        <div className="mt-1.5 flex items-center gap-1 text-sm">
+                            <span className="text-muted-foreground">turen.id/@</span>
+                            <Input
+                                id="slug"
+                                value={data.slug}
+                                onChange={(e) => setData('slug', e.target.value.toLowerCase())}
+                                className="flex-1"
+                            />
+                        </div>
+                        <p className="mt-1 text-xs text-muted-foreground">Huruf kecil, angka, dan tanda hubung (-) saja.</p>
+                        {errors.slug && <p className="mt-1 text-xs text-red-600">{errors.slug}</p>}
                     </div>
 
                     <div>
