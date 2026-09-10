@@ -205,29 +205,30 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
                 </form>
 
                 <div className="mt-8 rounded-xl border p-4">
-                    <h2 className="text-sm font-semibold">Subdomain Klien</h2>
+                    <h2 className="text-sm font-semibold">Link Publik</h2>
                     <p className="mt-1 text-xs text-muted-foreground">
-                        Setiap bisnis otomatis punya subdomain sendiri berdasarkan slug-nya (butuh wildcard DNS +
-                        SSL di server sudah aktif).
+                        Link default bisnis ini di direktori — selalu aktif, tidak perlu setup tambahan.
                     </p>
                     <a
-                        href={`https://${business.slug}.turen.id`}
+                        href={`https://turen.id/@${business.slug}`}
                         target="_blank"
                         rel="noreferrer"
                         className="mt-2 inline-block text-sm font-medium text-emerald-700 hover:underline"
                     >
-                        {business.slug}.turen.id
+                        turen.id/@{business.slug}
                     </a>
-                    <p className="mt-2 text-xs text-muted-foreground">
-                        Kalau ada file HTML custom (di bawah) diupload, subdomain ini akan menampilkan file itu.
-                        Kalau belum, otomatis redirect ke halaman detail direktori.
+                    <p className="mt-3 text-xs text-muted-foreground">
+                        Subdomain sendiri (misal <span className="font-medium">{business.slug}.turen.id</span>) bisa
+                        diaktifkan belakangan sebagai upgrade manual — perlu setup wildcard DNS + SSL di server
+                        dulu. Belum otomatis aktif untuk sekarang.
                     </p>
                 </div>
 
                 <div className="mt-4 rounded-xl border p-4">
                     <h2 className="text-sm font-semibold">Situs Klien (HTML statis)</h2>
                     <p className="mt-1 text-xs text-muted-foreground">
-                        Upload file .html custom milik bisnis ini — akan otomatis muncul di subdomain di atas.
+                        Upload file .html custom milik bisnis ini. Bisa diakses sekarang lewat link statis di
+                        bawah, dan otomatis ikut muncul di subdomain kalau/setelah diaktifkan.
                     </p>
 
                     {business.microsite_path ? (

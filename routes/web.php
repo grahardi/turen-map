@@ -17,7 +17,7 @@ Route::get('/', [BusinessController::class, 'index'])->name('home');
 Route::get('/bisnis', [BusinessController::class, 'index'])->name('businesses.index');
 Route::get('/bisnis/tambah', [BusinessController::class, 'create'])->name('businesses.create');
 Route::post('/bisnis', [BusinessController::class, 'store'])->name('businesses.store');
-Route::get('/bisnis/{business}', [BusinessController::class, 'show'])->name('businesses.show');
+Route::get('/@{business}', [BusinessController::class, 'show'])->name('businesses.show');
 
 Route::get('/situs/{business}', [MicrositeController::class, 'show'])->name('microsite.show');
 

@@ -101,7 +101,7 @@ export default function Dashboard({ stats, byCategory, topViewed, recent }: Page
                             {topViewed.map((b, i) => (
                                 <Link
                                     key={b.id}
-                                    href={`/bisnis/${b.slug}`}
+                                    href={`/@${b.slug}`}
                                     className="flex items-center justify-between rounded-lg px-2 py-2 text-sm hover:bg-muted"
                                 >
                                     <div className="flex items-center gap-3">
@@ -131,7 +131,7 @@ export default function Dashboard({ stats, byCategory, topViewed, recent }: Page
                         {recent.map((b) => (
                             <Link
                                 key={b.id}
-                                href={`/bisnis/${b.slug}`}
+                                href={`/@${b.slug}`}
                                 className="flex items-center justify-between rounded-lg px-2 py-2 text-sm hover:bg-muted"
                             >
                                 <div>

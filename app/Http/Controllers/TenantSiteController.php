@@ -26,6 +26,6 @@ class TenantSiteController extends Controller
         }
 
         // Kalau belum ada microsite, redirect ke halaman detail di direktori utama.
-        return redirect()->to('https://'.config('app.tenant_domain').'/bisnis/'.$business->slug);
+        return redirect()->to('https://'.config('app.tenant_domain').'/@'.$business->slug);
     }
 }
