@@ -3,7 +3,7 @@
 use App\Http\Controllers\BusinessController;
 use Illuminate\Support\Facades\Route;
 
-Route::inertia('/', 'welcome')->name('home');
+Route::get('/', [BusinessController::class, 'index'])->name('home');
 
 Route::get('/bisnis', [BusinessController::class, 'index'])->name('businesses.index');
 Route::get('/bisnis/tambah', [BusinessController::class, 'create'])->name('businesses.create');
