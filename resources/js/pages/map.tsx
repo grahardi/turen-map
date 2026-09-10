@@ -10,7 +10,7 @@ interface MapPageProps {
 }
 
 // Titik tengah perkiraan Kecamatan Turen — sesuaikan lagi setelah data OSM masuk.
-const TUREN_CENTER = { longitude: 112.6706, latitude: -8.1642, zoom: 13.5 };
+const TUREN_CENTER = { longitude: 112.690201, latitude: -8.184302, zoom: 13 };
 
 export default function TurenMap({ features, boundaries }: MapPageProps) {
     const [selected, setSelected] = useState<MapFeature | null>(null);
