@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import { CheckCircle2, ChevronRight, Clock, Compass, Heart, MapPin, PlusCircle, Search, X } from 'lucide-react';
+import { CheckCircle2, ChevronRight, Clock, Compass, MapPin, PlusCircle, Search, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
@@ -393,16 +393,35 @@ export default function BusinessIndex({ businesses, categories }: PageProps) {
 
                             <div>
                                 <h4 className="mb-3 text-[11px] font-bold tracking-wider text-white uppercase">
-                                    Informasi
+                                    Didukung Oleh
                                 </h4>
-                                <p className="mb-3 text-slate-400">
-                                    Hubungi pengelola portal untuk info lebih lanjut.
+                                <a
+                                    href="https://www.intan.net.id"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="inline-flex items-center gap-2 rounded-lg bg-white/5 p-2 transition-colors hover:bg-white/10"
+                                >
+                                    <img
+                                        src="https://www.intan.net.id/storage/settings/OcHxYFnAHYoSCrLKNJj8q0VBHZPLGORqhjmzyMaW.png"
+                                        alt="PT Bella Intan Media"
+                                        className="h-8 w-8 rounded bg-white object-contain p-0.5"
+                                    />
+                                    <span className="text-sm font-semibold text-white">PT Bella Intan Media</span>
+                                </a>
+                                <p className="mt-3 text-slate-400">
+                                    Hosting &amp; server disponsori oleh{' '}
+                                    <a
+                                        href="https://www.intan.net.id"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="font-medium text-emerald-400 hover:underline"
+                                    >
+                                        PT Bella Intan Media
+                                    </a>
+                                    . PT Bella Intan Media adalah perusahaan yang bergerak di bidang penyedia
+                                    layanan internet (Internet Service Provider/ISP), Hosting, IP Transit, dan Web
+                                    Design.
                                 </p>
-                                <div className="flex items-center gap-3 text-base">
-                                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 text-white transition-colors hover:bg-emerald-600">
-                                        <Heart className="h-4 w-4" />
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div className="border-t border-slate-800 pt-6 text-center text-slate-500">
