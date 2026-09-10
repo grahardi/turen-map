@@ -20,19 +20,15 @@ interface Business {
     photo_url: string | null;
 }
 
-interface PageProps {
-    businesses: Business[];
+interface Category {
+    key: string;
+    label: string;
 }
 
-const CATEGORIES = [
-    { id: 'semua', label: 'Semua' },
-    { id: 'kuliner', label: 'Kuliner & Cafe' },
-    { id: 'wisata', label: 'Wisata & Ibadah' },
-    { id: 'industri', label: 'Industri & BUMN' },
-    { id: 'kesehatan', label: 'Kesehatan' },
-    { id: 'pasar', label: 'Belanja & Pasar' },
-    { id: 'jasa', label: 'Jasa & Servis' },
-];
+interface PageProps {
+    businesses: Business[];
+    categories: Category[];
+}
 
 const QUICK_TAGS = [
     { label: '🍜 Bakso Turen', query: 'bakso' },
@@ -43,7 +39,7 @@ const QUICK_TAGS = [
 
 const VILLAGES = ['Turen Kota', 'Sananrejo', 'Sedayu', 'Gedog Wetan', 'Kedok', 'Tanggungharjo', 'Paringan', 'Jeru'];
 
-export default function BusinessIndex({ businesses }: PageProps) {
+export default function BusinessIndex({ businesses, categories }: PageProps) {
     const [query, setQuery] = useState('');
     const [activeCategory, setActiveCategory] = useState('semua');
 
@@ -168,7 +164,7 @@ export default function BusinessIndex({ businesses }: PageProps) {
                                     <div className="mt-0.5 text-xs text-slate-400">Terverifikasi</div>
                                 </div>
                                 <div>
-                                    <div className="text-2xl font-bold text-emerald-400">{CATEGORIES.length - 1}</div>
+                                    <div className="text-2xl font-bold text-emerald-400">{categories.length}</div>
                                     <div className="mt-0.5 text-xs text-slate-400">Kategori</div>
                                 </div>
                             </div>
@@ -179,13 +175,24 @@ export default function BusinessIndex({ businesses }: PageProps) {
                     <section className="relative z-10 mx-auto -mt-6 max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="rounded-2xl border border-slate-100 bg-white p-4 shadow-xl sm:p-5">
                             <div className="flex items-center gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
-                                {CATEGORIES.map((cat) => (
+                                <button
+                                    onClick={() => setActiveCategory('semua')}
+                                    className={cn(
+                                        'inline-flex shrink-0 items-center gap-2 rounded-xl px-3.5 py-1.5 text-xs font-semibold transition-all',
+                                        activeCategory === 'semua'
+                                            ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
+                                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200',
+                                    )}
+                                >
+                                    Semua
+                                </button>
+                                {categories.map((cat) => (
                                     <button
-                                        key={cat.id}
-                                        onClick={() => setActiveCategory(cat.id)}
+                                        key={cat.key}
+                                        onClick={() => setActiveCategory(cat.key)}
                                         className={cn(
                                             'inline-flex shrink-0 items-center gap-2 rounded-xl px-3.5 py-1.5 text-xs font-semibold transition-all',
-                                            activeCategory === cat.id
+                                            activeCategory === cat.key
                                                 ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
                                                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200',
                                         )}
@@ -360,10 +367,10 @@ export default function BusinessIndex({ businesses }: PageProps) {
                                     Kategori Populer
                                 </h4>
                                 <ul className="space-y-2">
-                                    {CATEGORIES.slice(1).map((cat) => (
-                                        <li key={cat.id}>
+                                    {categories.map((cat) => (
+                                        <li key={cat.key}>
                                             <button
-                                                onClick={() => setActiveCategory(cat.id)}
+                                                onClick={() => setActiveCategory(cat.key)}
                                                 className="transition-colors hover:text-white"
                                             >
                                                 {cat.label}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Concerns\HandlesBusinessPhoto;
 use App\Http\Controllers\Controller;
 use App\Models\Business;
+use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -24,7 +25,9 @@ class BusinessController extends Controller
 
     public function create(): Response
     {
-        return Inertia::render('admin/businesses/create');
+        return Inertia::render('admin/businesses/create', [
+            'categories' => Category::orderBy('label')->get(['key', 'label']),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -48,6 +51,7 @@ class BusinessController extends Controller
     {
         return Inertia::render('admin/businesses/edit', [
             'business' => $business,
+            'categories' => Category::orderBy('label')->get(['key', 'label']),
         ]);
     }
 

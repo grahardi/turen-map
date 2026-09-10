@@ -3,12 +3,15 @@ import { ArrowLeft } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-const CATEGORY_OPTIONS = ['kuliner', 'wisata', 'industri', 'kesehatan', 'pasar', 'jasa'];
+interface Category {
+    key: string;
+    label: string;
+}
 
-export default function AdminBusinessCreate() {
+export default function AdminBusinessCreate({ categories }: { categories: Category[] }) {
     const { data, setData, post, processing, errors } = useForm({
         name: '',
-        category: 'kuliner',
+        category: categories[0]?.key ?? '',
         village: '',
         description: '',
         address: '',
@@ -56,9 +59,9 @@ export default function AdminBusinessCreate() {
                             onChange={(e) => setData('category', e.target.value)}
                             className="mt-1.5 w-full rounded-md border px-3 py-2 text-sm capitalize"
                         >
-                            {CATEGORY_OPTIONS.map((c) => (
-                                <option key={c} value={c}>
-                                    {c}
+                            {categories.map((c) => (
+                                <option key={c.key} value={c.key}>
+                                    {c.label}
                                 </option>
                             ))}
                         </select>

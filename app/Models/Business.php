@@ -56,6 +56,16 @@ class Business extends Model
                 }
                 $business->slug = $slug;
             }
+
+            if (empty($business->category) || ! Category::where('key', $business->category)->exists()) {
+                $business->category = Category::FALLBACK_KEY;
+            }
+        });
+
+        static::saving(function (Business $business) {
+            if ($business->isDirty('category') && (empty($business->category) || ! Category::where('key', $business->category)->exists())) {
+                $business->category = Category::FALLBACK_KEY;
+            }
         });
     }
 

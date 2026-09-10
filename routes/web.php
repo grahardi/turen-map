@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BusinessController as AdminBusinessController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MicrositeController;
@@ -34,6 +35,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/bisnis/{business}', [AdminBusinessController::class, 'destroy'])->name('businesses.destroy');
         Route::post('/bisnis/{business}/situs', [AdminBusinessController::class, 'uploadMicrosite'])->name('businesses.microsite.upload');
         Route::delete('/bisnis/{business}/situs', [AdminBusinessController::class, 'deleteMicrosite'])->name('businesses.microsite.delete');
+
+        Route::get('/kategori', [CategoryController::class, 'index'])->name('categories.index');
+        Route::post('/kategori', [CategoryController::class, 'store'])->name('categories.store');
+        Route::put('/kategori/{category}', [CategoryController::class, 'update'])->name('categories.update');
+        Route::delete('/kategori/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
     });
 });
 

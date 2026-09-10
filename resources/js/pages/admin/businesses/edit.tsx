@@ -4,7 +4,10 @@ import { useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-const CATEGORY_OPTIONS = ['kuliner', 'wisata', 'industri', 'kesehatan', 'pasar', 'jasa'];
+interface Category {
+    key: string;
+    label: string;
+}
 
 interface Business {
     id: number;
@@ -30,7 +33,7 @@ interface Business {
     subdomain_enabled: boolean;
 }
 
-export default function AdminBusinessEdit({ business }: { business: Business }) {
+export default function AdminBusinessEdit({ business, categories }: { business: Business; categories: Category[] }) {
     const { data, setData, post, processing, errors } = useForm({
         _method: 'put',
         name: business.name ?? '',
@@ -105,9 +108,9 @@ export default function AdminBusinessEdit({ business }: { business: Business }) 
                             onChange={(e) => setData('category', e.target.value)}
                             className="mt-1.5 w-full rounded-md border px-3 py-2 text-sm capitalize"
                         >
-                            {CATEGORY_OPTIONS.map((c) => (
-                                <option key={c} value={c}>
-                                    {c}
+                            {categories.map((c) => (
+                                <option key={c.key} value={c.key}>
+                                    {c.label}
                                 </option>
                             ))}
                         </select>
