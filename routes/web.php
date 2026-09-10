@@ -28,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/bisnis', [AdminBusinessController::class, 'index'])->name('businesses.index');
         Route::get('/bisnis/tambah', [AdminBusinessController::class, 'create'])->name('businesses.create');
         Route::post('/bisnis', [AdminBusinessController::class, 'store'])->name('businesses.store');
+        Route::get('/bisnis/{business}', fn (\App\Models\Business $business) => redirect()->route('admin.businesses.edit', $business));
         Route::get('/bisnis/{business}/edit', [AdminBusinessController::class, 'edit'])->name('businesses.edit');
         Route::put('/bisnis/{business}', [AdminBusinessController::class, 'update'])->name('businesses.update');
         Route::delete('/bisnis/{business}', [AdminBusinessController::class, 'destroy'])->name('businesses.destroy');
